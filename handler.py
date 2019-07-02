@@ -33,12 +33,12 @@ def handle(req):
     url = f'{WAKI_API_URL}{FEED_API_PATH}/{station_id}/'
 
     r = requests.get(url, params=params)
-    if (r.status_code is 200):
+    if (r.status_code == 200):
         data = r.json()
-        if ('status' in data and
-            data['status'].lower() is 'ok'):
-            name = data['city']['name'].split(', ')[0]
-            date = data['time']['s'].split(' ')[0]
+        if (    'status' in data and
+                data['status'].lower() == 'ok'):
+            name = data['data']['city']['name'].split(', ')[0]
+            date = data['data']['time']['s'].split(' ')[0]
             file_name = f'{name}{date}.json'
 
             json_data = json.dumps(data, indent=2)
