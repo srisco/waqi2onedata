@@ -44,12 +44,22 @@ def handle(req):
             json_data = json.dumps(data, indent=2)
 
             # Upload to Onedata space
-            url = f'https://{vars['ONEPROVIDER_HOST']}{CDMI_PATH}/{vars['ONEDATA_SPACE']}/{vars['ONEDATA_SPACE_FOLDER']}/{file_name}'
-            headers = {'X-Auth-Token': vars('ONEDATA_ACCESS_TOKEN')}
+            url = 'https://{0}{1}/{2}/{3}/{4}'.format(
+                vars['ONEPROVIDER_HOST'],
+                CDMI_PATH,
+                vars['ONEDATA_SPACE'],
+                vars['ONEDATA_SPACE_FOLDER'],
+                file_name
+            )
+            headers = {'X-Auth-Token': vars['ONEDATA_ACCESS_TOKEN']}
 
             r = requests.put(url, data=json_data, headers=headers)
             if r.status_code in [201, 202, 204]:
-                return f'File "{file_name}" uploaded successfully to space "{vars['ONEDATA_SPACE']}" in Oneprovider "{vars['ONEPROVIDER_HOST']}"'
+                return 'File "{0}" uploaded successfully to space "{1}" in Oneprovider "{2}"'.format(
+                    file_name,
+                    vars['ONEDATA_SPACE'],
+                    vars['ONEPROVIDER_HOST']
+                )
             else:
                 return 'Error uploading file to Onedata'
 
