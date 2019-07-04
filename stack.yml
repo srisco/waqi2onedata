@@ -1,0 +1,17 @@
+version: 1.0
+provider:
+  name: openfaas
+  gateway: http://127.0.0.1:8080
+
+functions:
+  waqi2onedata:
+    lang: python3
+    handler: ./waqi2onedata
+    image: srisco/waqi2onedata
+    environment:
+      ONEPROVIDER_HOST: host
+      ONEDATA_ACCESS_TOKEN: token
+      ONEDATA_SPACE: my-space
+      ONEDATA_SPACE_FOLDER: my-folder
+      WAQI_TOKEN: token
+      write_debug: true
